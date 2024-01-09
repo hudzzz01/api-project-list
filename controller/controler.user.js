@@ -19,9 +19,9 @@ class UserController{
             }
 
             const token = await Token.createToken({
-                id : user.id,
-                nama: user.nama,
-                role : user.role
+                id : user[0].id,
+                nama: user[0].nama,
+                role : user[0].role
             });
             ViewResponse.success(res,"berhasil login",token,200);
         } catch (error) {
