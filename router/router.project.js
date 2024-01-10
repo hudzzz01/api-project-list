@@ -2,6 +2,8 @@ import express from "express";
 import ProjectController from "../controller/controler.project.js";
 import cors from "cors"
 import uploadProjectImage from "../middleware/upload.project.image.js";
+// import { bucket } from '../firebase.js';
+import bucket from "../firebase.js"
 import auth from "../middleware/auth/auth.js";
 
 const routerProject = express.Router();

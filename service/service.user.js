@@ -10,12 +10,12 @@ class UserService{
     static async createUser(user){
         const ciperPassword = CryptoJS.HmacSHA256(user.password,"kamu kenapa sini cerita").toString();
         //console.log(ciperPassword)
-        const username = prisma.user.findUnique({
+        const username = prisma.user.findMany({
             where:{
                 username:user.username,
             }
         })
-        if(username){
+        if((await username).length != 0){
             deleteFile(`uploads/${user.img}`)
             throw new Error("username telah digunakan");
         }
