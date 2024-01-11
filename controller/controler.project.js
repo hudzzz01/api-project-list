@@ -110,12 +110,24 @@ class ProjectController{
             ViewResponse.fail(res,"Gagal mengubah data Project",error,gagal);
         }
     }
-    static async deleteProject(req,res){
+    // static async deleteProject(req,res){
+    //     try {
+    //         const deleteProject = await ProjectService.deleteProject(req.params.id);
+    //         ViewResponse.success(res,"berhasil menghapus data Project",deleteProject,200);
+    //     } catch (error) {
+    //         ViewResponse.fail(res,"gagal memnghapus data Project", error,gagal);
+    //     }
+    // }
+    static async deleteProject(req, res) {
         try {
-            const deleteProject = await ProjectService.deleteProject(req.params.id);
-            ViewResponse.success(res,"berhasil menghapus data Project",deleteProject,200);
+            // Call the service layer to handle project deletion
+            const deleteResult = await ProjectService.deleteProject(req.params.id);
+            
+            // Send success response
+            ViewResponse.success(res, "berhasil menghapus data Project", deleteResult, 200);
         } catch (error) {
-            ViewResponse.fail(res,"gagal memnghapus data Project", error,gagal);
+            // Send error response
+            ViewResponse.fail(res, "gagal menghapus data Project", error.message, 500);
         }
     }
 }

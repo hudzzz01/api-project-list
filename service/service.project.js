@@ -102,7 +102,9 @@ class ProjectService{
         if(!data){
             throw new Error('id tidak ditemukan')
         }
-        deleteFile(`uploads/image_project/${data.foto}`)
+        const filePath = data.foto;
+
+        await deleteFile(filePath)
         return await prisma.Project.delete({
             where:{
                 id:id
