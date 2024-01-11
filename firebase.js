@@ -3,7 +3,7 @@ import serviceAccount from './serviceAccountKey.json' assert { type: "json" }; /
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "suedespace-915d6.appspot.com"
+  storageBucket: "suedespace-994f9.appspot.com"
 });
 
 const bucket = admin.storage().bucket();
