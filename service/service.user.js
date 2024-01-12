@@ -59,29 +59,26 @@ class UserService{
         }
         return data
     }
+
+    static async inverseOutputReadByUsername(username){
+        
+        let data = await prisma.user.findMany({
+            where:{
+                username:username
+            }
+        })
+
+        if(data.length != 0){
+            throw new Error("username sudah digunakan");
+        }
+        return data
+    }
     
 
     static async updateUser(id,user){
         //console.log(id)
         const ciperPassword = CryptoJS.HmacSHA256(user.password,"kamu kenapa sini cerita").toString();
-        const dataUser = await prisma.user.findUnique({
-            where :{
-                id:id,
-            }
-        });
-        if(!dataUser){
-            deleteFile(`uploads/${user.img}`)
-            throw new Error("id tidak ditemukan");
-        }
-        const username = prisma.user.findUnique({
-            where:{
-                username:user.username,
-            }
-        })
-        if(username){
-            deleteFile(`uploads/${user.img}`)
-            throw new Error("username telah digunakan");
-        }
+    
         return await prisma.user.update({
             where:{
                 id:id

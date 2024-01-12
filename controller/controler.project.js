@@ -3,6 +3,8 @@ import ProjectService from "../service/service.project.js";
 import ViewResponse from "../view/view.response.js";
 import CryptoJS from "crypto-js";
 import bucket from "../firebase.js";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet('12345678',8);
 
 let gagal = 200;
 
@@ -17,7 +19,8 @@ class ProjectController{
             
             }
 
-
+            
+            file.originalname = nanoid()+"-project-"+file.originalname
             const blob = bucket.bucket.file(file.originalname.replace(/ /g, "_"));
             const blobWriter = blob.createWriteStream({
                 metadata: {
@@ -72,20 +75,19 @@ class ProjectController{
     static async updateProject(req,res){
         try {
             
-            const { nama_project, deskripsi } = req.body;
+            
             const file = req.file;
             if (!file) {
                 ViewResponse.fail (res,'No image file uploaded.', 400);
-            
+                
             }
-
+            
             let data
             try {
                 data = await ProjectService.readById(req.params.id);
             } catch (error) {
                 throw new Error("id tidak ditemukan")
             }
-
              //hapus media di firebase
              try {
                 //ambil nama file dari URL
@@ -101,7 +103,7 @@ class ProjectController{
                 throw new Error("gagal hapus file dari firebase")
             }
 
-
+            file.originalname = nanoid()+"-project-"+file.originalname
             const blob = bucket.bucket.file(file.originalname.replace(/ /g, "_"));
             const blobWriter = blob.createWriteStream({
                 metadata: {
@@ -144,13 +146,6 @@ class ProjectController{
     // }
     static async deleteProject(req, res) {
         try {
-<<<<<<< Updated upstream
-            // Call the service layer to handle project deletion
-            const deleteResult = await ProjectService.deleteProject(req.params.id);
-            
-            // Send success response
-            ViewResponse.success(res, "berhasil menghapus data Project", deleteResult, 200);
-=======
             
 
             //hapus file dari database
@@ -172,7 +167,6 @@ class ProjectController{
             }
 
             ViewResponse.success(res,"berhasil menghapus data Project",deleteProject,200);
->>>>>>> Stashed changes
         } catch (error) {
             // Send error response
             ViewResponse.fail(res, "gagal menghapus data Project", error.message, 500);

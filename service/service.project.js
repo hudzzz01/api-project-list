@@ -59,7 +59,7 @@ class ProjectService{
     
 
     static async updateProject(id,project){
-        console.log(id)
+        //console.log(id)
         const cekId = await prisma.Project.findUnique({
             where :{
                 id:id,
