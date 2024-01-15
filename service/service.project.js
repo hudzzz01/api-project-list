@@ -59,7 +59,7 @@ class ProjectService{
     
 
     static async updateProject(id,project){
-        console.log(id)
+        //console.log(id)
         const cekId = await prisma.Project.findUnique({
             where :{
                 id:id,
@@ -102,7 +102,9 @@ class ProjectService{
         if(!data){
             throw new Error('id tidak ditemukan')
         }
-        deleteFile(`uploads/image_project/${data.foto}`)
+        const filePath = data.foto;
+
+        await deleteFile(filePath)
         return await prisma.Project.delete({
             where:{
                 id:id

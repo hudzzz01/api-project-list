@@ -10,7 +10,7 @@ class Token{
     static async decodeToken(token){
         try {
             let decoded = jwt.verify(token, 'himitsu');
-            console.log(decoded)
+            //console.log(decoded)
             return decoded
 
         } catch(err) {
